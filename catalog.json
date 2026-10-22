@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "patches": [
+    {
+      "id": "bf3-single-player",
+      "version": "1.0.0",
+      "title": "Battlefield 3 · Single-player compatibility",
+      "description": "Battlefield 3 only. Disables optional pbcl/pbcl64 DLL loading for the existing single-player campaign. Does not replace EA/Steam authentication, unlock content, or provide multiplayer/offline emulation. Remove this profile before joining multiplayer servers that require PunkBuster.",
+      "executables": [
+        "bf3.exe"
+      ],
+      "path": "packages/bf3-single-player/1.0.0.zip",
+      "bytes": 215,
+      "sha256": "1404dfd2f344c2c6448f0bfa8eeb8a5ab6ba7d40c0d4ecc1516a49b8e4f98931",
+      "kind": "profile",
+      "policy": "bf3-single-player"
+    },
+    {
+      "id": "mgs-ground-zeroes-startup",
+      "version": "1.0.0",
+      "title": "Ground Zeroes · Startup compatibility",
+      "description": "Launch profile for MgsGroundZeroes.exe only. Enables image-page registration and the Wine tick thunk. Requires an Aura runtime containing the matching Wine/FEX support. This is a runtime-dependent profile, not a standalone game DLL or an FPS optimization. Removing the profile disables it next launch.",
+      "executables": [
+        "MgsGroundZeroes.exe"
+      ],
+      "path": "packages/mgs-ground-zeroes-startup/1.0.0.zip",
+      "bytes": 225,
+      "sha256": "9bb3005bc9808910048f980bcebbfea6ce935c5b5bcfa094442f2fb07447b770",
+      "kind": "profile",
+      "policy": "mgs-startup"
+    },
+    {
+      "id": "mirrors-edge-time",
+      "version": "1.0.0",
+      "title": "Mirror’s Edge (2008) · Time conversion startup fix",
+      "description": "Exact-version executable patch routing the failing time conversion to the existing MSVCR80 implementation. Requires the original 60,167,392-byte EXE with SHA-256 84eea8fd3c4494d8ce3db8fc55b846f731425d6a2cd63da1189d641daf2929e4. Restore any legacy Aura startup patch before installation. Original EXE backed up locally.",
+      "executables": [
+        "MirrorsEdge.exe"
+      ],
+      "path": "packages/mirrors-edge-time/1.0.0.zip",
+      "bytes": 418,
+      "sha256": "fe0bc97a9e8bf85c07b54eb305dcd3309b65e409f63b681691230009b0aeb903",
+      "kind": "binary",
+      "policy": ""
+    },
+    {
+      "id": "southpark-tfbw-low-va",
+      "version": "1.0.0",
+      "title": "South Park: The Fractured But Whole · Address space compatibility",
+      "description": "Exact-version virtual-address allocation patch for SouthPark_TFBW.exe (223,530,184 bytes). Reduces virtual pool reservations, not physical RAM usage. Does not support The Stick of Truth. Restore any legacy Aura low-address patch first. Original EXE backed up locally.",
+      "executables": [
+        "SouthPark_TFBW.exe"
+      ],
+      "path": "packages/southpark-tfbw-low-va/1.0.0.zip",
+      "bytes": 414,
+      "sha256": "b66da98560913802e64fbf8980d34b5ba67c7fd15ce3aed0277a9fe942107454",
+      "kind": "binary",
+      "policy": ""
+    },
+    {
+      "id": "mgs-ground-zeroes-widescreen",
+      "version": "0.0.3-aura1",
+      "title": "Ground Zeroes · MGSVFix widescreen",
+      "description": "MGSVFix 0.0.3 by Lyall, with Ultimate ASI Loader. Installs beside MgsGroundZeroes.exe and adds a per-game winmm=n,b override. Fixes resolution, aspect ratio and HUD for the selected display ratio. Intro skipping and FPS unlocking default off in this package. Wine/ARM64EC phone behavior still requires testing.",
+      "executables": [
+        "MgsGroundZeroes.exe"
+      ],
+      "path": "packages/mgs-ground-zeroes-widescreen/0.0.3-aura1.zip",
+      "bytes": 764510,
+      "sha256": "0303a63dfa6d3b25d0f1ed88570d72391a0007275346afcc0e4577dcfb6601f9",
+      "kind": "files",
+      "policy": "winmm-native"
+    },
+    {
+      "id": "mirrors-edge-widescreen-tool",
+      "version": "4.5.0-beta3",
+      "title": "Mirror’s Edge · Widescreen repair tool",
+      "description": "Mirror’s Edge Tweaks 4.5.0-beta3 by softsoundd. Interactive Windows tool requiring .NET 10; downloading is not applying the widescreen fix. Follow README instructions to apply FOV/resolution changes. Aura only manages removal of this downloaded tool, not game changes made later by the tool. Original tool, matching source and license notices are included in the repository.",
+      "executables": [
+        "MirrorsEdge.exe"
+      ],
+      "path": "packages/mirrors-edge-widescreen-tool/4.5.0-beta3.zip",
+      "bytes": 3982979,
+      "sha256": "586c66f7bf07a18e7f1328ee7b515f6c19ca3f1ec5ee7174f81f3986a74f2681",
+      "kind": "tool",
+      "policy": ""
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+*.key
+*.p12
+*.pfx
+*private*.pem
+__pycache__/
