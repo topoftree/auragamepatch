@@ -12,6 +12,7 @@ Aura 的游戏专用兼容补丁和宽屏工具仓库。应用按实际启动 EX
 | South Park: The Fractured But Whole | 虚拟地址分配兼容 | 校验完整 EXE 哈希后修改分配参数 | 使用本机原文件备份恢复 |
 | Ground Zeroes | MGSVFix 0.0.3 宽屏 | 自动安装 ASI / DLL / INI，并设置此游戏的 `winmm=n,b` | 删除新增文件、恢复原文件并取消该启动覆盖 |
 | Mirror’s Edge（2008） | Mirror’s Edge Tweaks 4.5.0-beta3 | **交互式工具下载，需要另行运行；下载不代表已应用宽屏** | Aura 管理工具文件；工具后来修改的游戏文件由工具自身的备份/恢复功能管理 |
+| Stardew Valley | StardewFPS 1.0 实验性解锁 | **依赖 SMAPI；改变动画和敌人速度，不建议正常游玩** | 删除模组、恢复旧文件后重启；不撤销存档进度 |
 
 战地 3 的单人兼容不作为通用开关，不替代 EA / Steam 登录或授权，不提供联机模拟，也不把游戏变成不需要客户端的离线版。联机前请移除该配置。
 
@@ -32,6 +33,10 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 文件补丁安装前，Aura 将所有被覆盖文件备份到设备内应用私有目录 `game-patches/<游戏ID>/<安装批次>/old/`，备份不上传到本仓库。完成备份后才替换文件；安装/恢复中断会保留日志并阻止游戏在半完成状态启动。
 
 卸载时新增文件会删除，覆盖文件会从备份恢复。多个补丁覆盖同一文件时，先卸载后装的补丁。游戏更新或用户修改后，Aura 会拒绝覆盖与记录不符的文件。清除 Aura 数据或卸载 Aura 会丢失这些本地备份。配置包不修改游戏文件，删除其安装记录即取消下次启动的专用配置。
+
+## Stardew Valley 帧率实验
+
+已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、原始模组、对应源码和 MIT 许可。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。本包不会自动安装 SMAPI，也不会自动解锁帧率；它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
 
 ## 两个宽屏资源
 
@@ -66,6 +71,6 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## 来源和许可证
 
-Aura 自有目录、补丁定义和打包脚本按 [MIT](LICENSE) 提供；第三方作品保留原许可证。MGSVFix、Ultimate ASI Loader、safetyhook、Zydis/Zycore、mINI 的声明位于 `licenses`。Mirror’s Edge Tweaks 及 NativeSharpLzo 的对应版本源码、GPL 文本与第三方声明均附带；构建依赖版本见原源码项目文件。
+Aura 自有目录、补丁定义和打包脚本按 [MIT](LICENSE) 提供；第三方作品保留原许可证。MGSVFix、Ultimate ASI Loader、safetyhook、Zydis/Zycore、mINI、StardewFPS 的声明位于 `licenses`。Mirror’s Edge Tweaks 及 NativeSharpLzo 的对应版本源码、GPL 文本与第三方声明均附带；构建依赖版本见原源码项目文件。
 
 Game-specific executable packages contain only small modification recipes, not complete proprietary executables. Names and trademarks belong to their respective owners. No gameplay performance gain or target-device compatibility is claimed without device testing.

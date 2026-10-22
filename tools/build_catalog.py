@@ -32,7 +32,8 @@ def build_package(name, version, title, description, executable, kind, *, policy
             info.external_attr = 0o100644 << 16
             archive.writestr(info, data)
     data = destination.read_bytes()
-    return dict(id=name, version=version, title=title, description=description, executables=[executable],
+    return dict(id=name, version=version, title=title, description=description,
+                executables=[executable] if isinstance(executable, str) else executable,
                 path=destination.relative_to(ROOT).as_posix(), bytes=len(data), sha256=SHA(data), kind=kind, policy=policy)
 
 
@@ -91,6 +92,21 @@ def build():
         'Aura only manages removal of this downloaded tool, not game changes made later by the tool. '
         'Original tool, matching source and license notices are included in the repository.',
         'MirrorsEdge.exe', 'tool', files=files))
+    with zipfile.ZipFile(ROOT / 'upstream/StardewFPS.1.0.0.zip') as archive:
+        files = {'Mods/' + name: archive.read(name)
+                 for name in ['StardewFPS/manifest.json', 'StardewFPS/StardewFPS.dll']}
+    files['Mods/StardewFPS/LICENSE.txt'] = (ROOT / 'licenses/StardewFPS-MIT.txt').read_bytes()
+    files['Mods/StardewFPS/README-Aura.md'] = (ROOT / 'docs/STARDEW_FPS.md').read_bytes()
+    entries.append(build_package('stardew-fps-experimental', '1.0.0-aura1',
+        'Stardew Valley · Experimental FPS unlock (SMAPI)',
+        'StardewFPS 1.0 by Lake1059. Requires a compatible SMAPI installation and launching '
+        'StardewModdingAPI.exe; Aura installs only the mod files, not SMAPI. For game 1.6; '
+        'Wine/ARM64EC compatibility is unverified. After loading a save, turn off in-game VSync '
+        'and enter fps 120 in the SMAPI console. Main menu stays at 60 FPS; repeat each launch. '
+        'WARNING: changes animation and enemy speed; the author advises against normal play. '
+        'This is not a performance fix or a guarantee of 120 FPS. Restart without the mod to '
+        'restore normal timing; back up saves before experimenting. See the repository guide.',
+        ['Stardew Valley.exe', 'StardewModdingAPI.exe'], 'files', files=files))
     return json.dumps(dict(schema=1, patches=entries), ensure_ascii=False, indent=2).encode() + b'\n'
 
 
