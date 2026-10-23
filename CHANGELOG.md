@@ -1,5 +1,11 @@
 # 更新记录
 
+## 2026-10-23 — 修正 StardewFPS 的新版下载入口说明
+
+- 从 GitHub 固定提交及 App 使用的 main 目录回读确认 StardewFPS 1.0.0-aura1 仍存在，目录签名和安装包完整哈希通过；未重复上传或改写已发布包。
+- README 与使用指南改为 Aura 0.1.125 的 Game Management → Mod → Download mod，解释为何 Download patch 不显示模组；补齐 SMAPI 依赖安装、启用后的启动入口和关闭／卸载／删除区别。
+- 保留实验限制：需手动执行 fps 命令，可能改变动画与敌人速度，不作为低于 60 FPS 的性能修复；不宣称手机兼容已验证。
+
 ## 2026-10-23 — Crysis 2 可选 DX9 profile 1.0.0
 
 - 新增 `crysis-2/compatibility/crysis2-dx9`，使用游戏原生 `-dx9`。精确匹配已核实的 1.9 x86 EXE，最低 Aura 0.1.122 / code 123，不改游戏 EXE／CFG、不自动安装。

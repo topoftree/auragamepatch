@@ -1,6 +1,6 @@
 # Aura Game Patches
 
-Aura 的游戏专用兼容补丁和宽屏工具仓库。应用按实际启动 EXE 匹配补丁；Steam 游戏和 Local 游戏均可使用。这里不包含完整游戏文件、游戏凭证或用户诊断。
+Aura 的游戏专用兼容补丁、宽屏工具和模组仓库。应用按实际启动 EXE 匹配补丁；Steam 游戏和 Local 游戏均可使用。这里不包含完整游戏文件、游戏凭证或用户诊断。
 
 按游戏和用途浏览：[补丁分类目录](games/README.md) · [机器可读分类](games/index.json)。分类为兼容、错误修复、宽屏、模组与工具，原有包路径保留。
 
@@ -17,7 +17,7 @@ Aura 的游戏专用兼容补丁和宽屏工具仓库。应用按实际启动 EX
 | South Park: The Fractured But Whole | 虚拟地址分配兼容 | 校验完整 EXE 哈希后修改分配参数 | 使用本机原文件备份恢复 |
 | Ground Zeroes | MGSVFix 0.0.3 宽屏 | 自动安装 ASI / DLL / INI，并设置此游戏的 `winmm=n,b` | 删除新增文件、恢复原文件并取消该启动覆盖 |
 | Mirror’s Edge（2008） | Mirror’s Edge Tweaks 4.5.0-beta3 | **交互式工具下载，需要另行运行；下载不代表已应用宽屏** | Aura 管理工具文件；工具后来修改的游戏文件由工具自身的备份/恢复功能管理 |
-| Stardew Valley | StardewFPS 1.0 实验性解锁 | **依赖 SMAPI；改变动画和敌人速度，不建议正常游玩** | 删除模组、恢复旧文件后重启；不撤销存档进度 |
+| Stardew Valley | [StardewFPS 1.0 实验性解锁](docs/STARDEW_FPS.md) | **Mod → Download mod**；依赖 SMAPI，改变动画和敌人速度，不建议正常游玩 | 关闭模组、恢复旧文件后重启；不撤销存档进度 |
 
 战地 3 的单人兼容不作为通用开关，不替代 EA / Steam 登录或授权，不提供联机模拟，也不把游戏变成不需要客户端的离线版。联机前请移除该配置。
 
@@ -25,11 +25,19 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## 在 Aura 中使用
 
-使用带新版 Patch 管理的 Aura，进入：
+Aura 0.1.125 的 Game Management 将补丁和模组分开。兼容修复、宽屏和工具进入：
 
 `当前游戏的 Game Management → Patch → Download patch`
 
+**StardewFPS 和 SMAPI** 进入：
+
+`当前游戏的 Game Management → Mod → Download mod`
+
+StardewFPS 的目录分类是 `mod`，因此不出现在新版 Download patch 列表；这不表示安装包被移除。若 Mod 列表也为空，重新进入下载页刷新，并核实当前游戏选择的启动程序是 `Stardew Valley.exe` 或 `StardewModdingAPI.exe`；封面匹配本身不决定目录匹配。
+
 选中补丁后查看说明，再选择「下载并安装」。安装前关闭游戏。已安装记录位于 Download patch 下方：关闭恢复原状；卸载同时保留本机补丁供离线重装；删除再清除 Aura 的补丁和备份。`Import patch` 支持 ZIP 和已解压文件，目标限制在当前游戏目录内。
+
+模组的相同操作位于 Mod 页面，安装记录显示在 Download mod 下方。旧版本尚未分出 Mod 页面时，模组仍在 Patch；不需要重新安装已有模组来完成分类迁移。
 
 ### 新修复的自动安装协议
 
@@ -47,7 +55,7 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## Stardew Valley 帧率实验
 
-已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、原始模组、对应源码和 MIT 许可。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。包本身只有模组；Aura 0.1.121 的依赖管理可为已选择／启用的模组自动补齐固定版本 SMAPI，并切换启动入口，但不自动输入 fps 命令。它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
+已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、[Aura 安装包](packages/stardew-fps-experimental/1.0.0-aura1.zip)、原始模组、对应源码和 MIT 许可。新版入口是 **Mod → Download mod → Experimental FPS unlock (SMAPI)**。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。包本身只有模组；带依赖管理的 Aura 可为已选择／启用的模组自动补齐固定版本 SMAPI，并切换启动入口，但不自动输入 fps 命令。它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
 
 ## 两个宽屏资源
 
