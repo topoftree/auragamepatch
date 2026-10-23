@@ -2,6 +2,10 @@
 
 Aura 的游戏专用兼容补丁和宽屏工具仓库。应用按实际启动 EXE 匹配补丁；Steam 游戏和 Local 游戏均可使用。这里不包含完整游戏文件、游戏凭证或用户诊断。
 
+按游戏和用途浏览：[补丁分类目录](games/README.md) · [机器可读分类](games/index.json)。分类为兼容、错误修复、宽屏、模组与工具，原有包路径保留。
+
+维护者工作流：[aura-game-patch-release skill](.agents/skills/aura-game-patch-release/SKILL.md)。新游戏专用修复会按该流程完成 App 接入、可重复打包、签名、发布与远端回读；通用 Wine/FEX/DXVK 修复仍随 App 运行时提供。
+
 ## 补丁列表
 
 | 游戏 | 补丁 | 安装方式 | 恢复方式 |
@@ -20,11 +24,17 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## 在 Aura 中使用
 
-需要带新版 Patch 页面的 Aura；当前公开 0.1.118 不会自动识别本目录。进入：
+使用带新版 Patch 管理的 Aura，进入：
 
-`Settings → Game Management → 当前游戏 → Patch → Download patch`
+`Library → 当前游戏介绍 → Patch → Download patch`
 
-选中补丁后查看说明，再选择「下载并安装」。安装前关闭游戏。已安装记录支持离线查看；选择「删除补丁并恢复原文件」撤销。`Import patch` 继续支持用户自己的已解压文件/文件夹。
+选中补丁后查看说明，再选择「下载并安装」。安装前关闭游戏。已安装记录位于 Download patch 下方：关闭恢复原状；卸载同时保留本机补丁供离线重装；删除再清除 Aura 的补丁和备份。`Import patch` 支持 ZIP 和已解压文件，目标限制在当前游戏目录内。
+
+### 新修复的自动安装协议
+
+新版协议使用独立签名的 `catalog-v2.json` / `catalog-v2.sig`。配套 App 代码在新会话准备时检查补丁，只有显式声明 `autoInstall`、满足最低 App 版本、EXE 完整哈希及所有目标原文件基线的兼容／错误修复才会下载、备份并启用。手动关闭、卸载、删除以及已有版本都优先，不自动替换。离线或下载失败可在 Patch 页面重试／导入；中断的写入必须先恢复。
+
+**本次只是流程和源码更新，没有发布新 APK。0.1.121 不含此自动安装协议；需要后续 App 构建（versionCode 至少 123，具体补丁可要求更高）。** 当前七个包均保留手动选择，不将历史实验包追溯改成自动安装。BF3 单人模式、宽屏、FPS 模组、交互工具不属于自动修复；安装成功也不代表手机效果已经验证。
 
 游戏专用的 EXE 补丁采用完整文件大小、原 SHA-256、逐字节原值与修改后 SHA-256 校验；其他版本会拒绝安装，不能靠重命名文件强行适配。请先恢复旧版 Aura 专用兼容，再安装同一修复的新包。旧版已应用的修改和本地备份保留供恢复。
 
@@ -36,7 +46,7 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## Stardew Valley 帧率实验
 
-已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、原始模组、对应源码和 MIT 许可。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。本包不会自动安装 SMAPI，也不会自动解锁帧率；它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
+已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、原始模组、对应源码和 MIT 许可。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。包本身只有模组；Aura 0.1.121 的依赖管理可为已选择／启用的模组自动补齐固定版本 SMAPI，并切换启动入口，但不自动输入 fps 命令。它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
 
 ## 两个宽屏资源
 
@@ -60,12 +70,13 @@ Ground Zeroes 启动包是**依赖运行时能力的配置补丁**，不是可�
 
 ## 目录、校验与维护
 
-- [catalog.json](catalog.json)：版本 1 目录，按 EXE 匹配，列出每个安装包的大小和 SHA-256。
+- [catalog-v2.json](catalog-v2.json)：版本 2 签名目录，含游戏分类及未来精确匹配的自动安装规则；当前七个包不自动安装。
+- [catalog.json](catalog.json)：保留严格版本 1 客户端的原始目录及签名，不向它添加新协议字段。
 - [catalog.sig](catalog.sig)、[catalog-public-key.pem](catalog-public-key.pem)：Ed25519 分离签名与公钥。签名私钥不在公开仓库，也不是 APK 签名密钥。
 - [SHA256SUMS](SHA256SUMS)：安装包、上游原始包及源码归档的校验值。
 - [sources](sources)：上游源码归档及 Ground Zeroes 运行时改动。
 - [licenses](licenses)：各作者许可证与第三方声明。
-- [tools/build_catalog.py](tools/build_catalog.py)：确定性安装包生成器。构建时显式传入仓库外的签名私钥：`python3 tools/build_catalog.py --key /private/path/catalogue.pem`。
+- [tools/patch_release.py](tools/patch_release.py)：新补丁的确定性打包、签名、分类、校验与发布工具，使用仓库外私钥，不自动轮换信任根。命令和配方见 [维护说明](.agents/skills/aura-game-patch-release/references/workflow.md)。历史 `build_catalog.py` 只用于旧包溯源，不用于新增／重建当前目录。
 
 安装包只允许有界的文件复制、精确字节修改和已支持的启动配置，不执行包内脚本。不要替换已经发布的版本目录；更新请增加版本号、重新构建并签名。新的原生代码类型或运行时能力需要相应应用版本支持。
 

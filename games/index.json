@@ -1,0 +1,33 @@
+{
+  "battlefield-3": {
+    "compatibility": [
+      "bf3-single-player"
+    ]
+  },
+  "metal-gear-solid-v-ground-zeroes": {
+    "compatibility": [
+      "mgs-ground-zeroes-startup"
+    ],
+    "widescreen": [
+      "mgs-ground-zeroes-widescreen"
+    ]
+  },
+  "mirrors-edge-2008": {
+    "fix": [
+      "mirrors-edge-time"
+    ],
+    "tool": [
+      "mirrors-edge-widescreen-tool"
+    ]
+  },
+  "south-park-the-fractured-but-whole": {
+    "fix": [
+      "southpark-tfbw-low-va"
+    ]
+  },
+  "stardew-valley": {
+    "mod": [
+      "stardew-fps-experimental"
+    ]
+  }
+}
