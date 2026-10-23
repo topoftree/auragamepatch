@@ -101,7 +101,7 @@
       "id": "stardew-fps-experimental",
       "version": "1.0.0-aura1",
       "title": "Stardew Valley · Experimental FPS unlock (SMAPI)",
-      "description": "StardewFPS 1.0 by Lake1059. Requires a compatible SMAPI installation and launching StardewModdingAPI.exe; Aura installs only the mod files, not SMAPI. For game 1.6; Wine/ARM64EC compatibility is unverified. After loading a save, turn off in-game VSync and enter fps 120 in the SMAPI console. Main menu stays at 60 FPS; repeat each launch. WARNING: changes animation and enemy speed; the author advises against normal play. This is not a performance fix or a guarantee of 120 FPS. Restart without the mod to restore normal timing; back up saves before experimenting. See the repository guide.",
+      "description": "StardewFPS 1.0 by Lake1059. Requires a compatible SMAPI installation and launching StardewModdingAPI.exe; This ZIP contains only mod files. Aura builds with SMAPI dependency management can install the pinned loader and select its launch entry when you enable this mod; the fps console command is still manual. For game 1.6; Wine/ARM64EC compatibility is unverified. After loading a save, turn off in-game VSync and enter fps 120 in the SMAPI console. Main menu stays at 60 FPS; repeat each launch. WARNING: changes animation and enemy speed; the author advises against normal play. This is not a performance fix or a guarantee of 120 FPS. Restart without the mod to restore normal timing; back up saves before experimenting. See the repository guide.",
       "executables": [
         "Stardew Valley.exe",
         "StardewModdingAPI.exe"
