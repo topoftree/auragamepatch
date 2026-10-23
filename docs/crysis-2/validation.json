@@ -1,0 +1,50 @@
+{
+  "status": "HOST_CHECKED_DEVICE_PENDING",
+  "patch": "crysis2-dx9@1.0.0",
+  "appCommit": "813ad9d19396e3a494f031369fd9dd1c31391dfe",
+  "minAppVersionCode": 123,
+  "appVersion": "0.1.122",
+  "installRestoreTested": true,
+  "versionMismatchTested": true,
+  "activationTested": true,
+  "automaticInstallation": false,
+  "nativeArgument": "-dx9",
+  "supportedExecutable": {
+    "name": "Crysis2.exe",
+    "bytes": 40670208,
+    "sha256": "0079d15b5b85a1ec7e50bb5e59c14eb255ffc247f2ac87e67b65b402bc8a7d91"
+  },
+  "appTests": {
+    "count": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "command": "AURA_CRYSIS2_TEST_EXE=<private supported EXE> AURA_CRYSIS2_PROFILE_ZIP=<real package ZIP> gradle :app:testDebugUnitTest --tests *Crysis2Dx9* --tests *GamePatchPackageTest --tests *GamePatchLifecycleTest --tests *GamePatchAutomaticTest --tests *GameStartupMoviesTest",
+    "coverage": [
+      "install without game writes",
+      "enabled receipt for exact game/executable",
+      "disable",
+      "uninstall retaining profile",
+      "offline reinstall",
+      "delete",
+      "duplicate rejection",
+      "unknown build rejection",
+      "changed build before install and reenable",
+      "changed build during later launch skips profile",
+      "Wine tokenization preserves quoted arguments",
+      "minimum App version",
+      "manual-only catalogue rule"
+    ]
+  },
+  "releaseToolTests": {
+    "count": 8,
+    "failures": 0,
+    "command": "python3 -m unittest discover -s tools/tests -v"
+  },
+  "privateInputRedistributed": false,
+  "gameExecuted": false,
+  "deviceTested": false,
+  "actualRenderer": "UNCONFIRMED",
+  "startupHangResolved": "UNCONFIRMED",
+  "croppingResolved": "UNCONFIRMED"
+}

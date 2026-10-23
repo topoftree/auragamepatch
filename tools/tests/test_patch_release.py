@@ -107,6 +107,20 @@ class PatchReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "remain manual"):
             release.validate_entry(entry)
 
+    def test_crysis2_renderer_profile_requires_supported_app_and_stays_manual(self):
+        entry = {"id": "crysis2-dx9", "version": "1.0.0", "title": "Crysis 2 DX9", "description": "Optional",
+                 "executables": ["Crysis2.exe"], "kind": "profile", "game": "crysis-2", "category": "compatibility",
+                 "policy": "crysis2-dx9", "path": "packages/crysis2-dx9/1.0.0.zip", "bytes": 1,
+                 "sha256": "0" * 64, "minAppVersionCode": 123}
+        release.validate_entry(entry)
+        for changes in ({"minAppVersionCode": 122}, {"executables": ["Crysis2Remastered.exe"]},
+                        {"kind": "files"}, {"id": "other", "path": "packages/other/1.0.0.zip"}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                release.validate_entry(entry | changes)
+        with self.assertRaisesRegex(ValueError, "remain manual"):
+            release.validate_entry(entry | {"autoInstall": {"minAppVersionCode": 123,
+                "executable": {"bytes": 40670208, "sha256": "0" * 64}}})
+
 
 if __name__ == "__main__":
     unittest.main()

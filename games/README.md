@@ -5,6 +5,7 @@
 | 游戏 | 分类 | 补丁 | 安装策略 |
 | --- | --- | --- | --- |
 | battlefield-3 | compatibility | [bf3-single-player 1.0.0](../packages/bf3-single-player/1.0.0.zip) | 用户手动选择 |
+| crysis-2 | compatibility | [crysis2-dx9 1.0.0](../packages/crysis2-dx9/1.0.0.zip) | 用户手动选择 |
 | metal-gear-solid-v-ground-zeroes | compatibility | [mgs-ground-zeroes-startup 1.0.0](../packages/mgs-ground-zeroes-startup/1.0.0.zip) | 用户手动选择 |
 | metal-gear-solid-v-ground-zeroes | widescreen | [mgs-ground-zeroes-widescreen 0.0.3-aura1](../packages/mgs-ground-zeroes-widescreen/0.0.3-aura1.zip) | 用户手动选择 |
 | mirrors-edge-2008 | fix | [mirrors-edge-time 1.0.0](../packages/mirrors-edge-time/1.0.0.zip) | 用户手动选择 |

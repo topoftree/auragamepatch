@@ -29,5 +29,10 @@
     "mod": [
       "stardew-fps-experimental"
     ]
+  },
+  "crysis-2": {
+    "compatibility": [
+      "crysis2-dx9"
+    ]
   }
 }

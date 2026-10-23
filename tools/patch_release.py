@@ -73,12 +73,15 @@ def validate_entry(entry, classified=True):
     kind, policy = entry["kind"], entry.get("policy", "")
     require(kind in {"profile", "binary", "files", "tool"}, "Unsupported kind")
     policies = {"bf3-single-player": ("profile", "bf3.exe"), "mgs-startup": ("profile", "mgsgroundzeroes.exe"),
-                "winmm-native": ("files", "mgsgroundzeroes.exe")}
+                "winmm-native": ("files", "mgsgroundzeroes.exe"), "crysis2-dx9": ("profile", "crysis2.exe")}
     if policy:
         require(policy in policies and policies[policy][0] == kind and
                 all(x.lower() == policies[policy][1] for x in exes), "Unsupported app launch policy")
     else:
         require(kind != "profile", "A profile requires an app-supported policy")
+    if policy == "crysis2-dx9":
+        require(entry["id"] == "crysis2-dx9" and entry.get("minAppVersionCode", 1) >= 123,
+                "Crysis 2 DX9 requires its fixed identity and App code 123 or later")
     if classified:
         require(SLUG.fullmatch(entry["game"]) and entry["category"] in CATEGORIES, "Missing game/category")
     auto = entry.get("autoInstall")
@@ -86,7 +89,7 @@ def validate_entry(entry, classified=True):
         require(set(auto) <= {"minAppVersionCode", "executable", "targets"}, "Unknown automatic fields")
         require(type(auto["minAppVersionCode"]) is int and
                 max(123, entry.get("minAppVersionCode", 1)) <= auto["minAppVersionCode"] <= 2147483647 and entry["category"] in {"compatibility", "fix"} and
-                kind != "tool" and policy not in {"bf3-single-player", "smapi", "winmm-native"} and
+                kind != "tool" and policy not in {"bf3-single-player", "smapi", "winmm-native", "crysis2-dx9"} and
                 entry["id"] != "stardew-fps-experimental", "This patch must remain manual")
         stamp(auto["executable"])
         require(auto["executable"]["bytes"] > 0, "Empty executable baseline")

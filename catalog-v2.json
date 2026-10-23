@@ -113,6 +113,23 @@
       "policy": "",
       "game": "stardew-valley",
       "category": "mod"
+    },
+    {
+      "id": "crysis2-dx9",
+      "version": "1.0.0",
+      "title": "Crysis 2 (1.9, 32-bit) · Optional DX9 renderer",
+      "description": "Optional native -dx9 launch profile for the verified 40,670,208-byte Crysis2.exe (SHA-256 0079d15b5b85a1ec7e50bb5e59c14eb255ffc247f2ac87e67b65b402bc8a7d91). Requires Aura 0.1.122 / versionCode 123 or later. This build filters r_Driver out of user.cfg and system.cfg; the native argument uses a separate startup branch. No game files, resolution, movies or saves are changed. Install and enable manually, then fully restart the game. Disabling restores the original launch arguments. Unknown or changed EXEs are not forced to DX9. May change available DX11 visual features. Actual CryRenderD3D9.dll loading, startup progress and cropped-screen improvement on Android are not yet verified; this is not a confirmed fix for the startup hang.",
+      "executables": [
+        "Crysis2.exe"
+      ],
+      "kind": "profile",
+      "policy": "crysis2-dx9",
+      "game": "crysis-2",
+      "category": "compatibility",
+      "minAppVersionCode": 123,
+      "path": "packages/crysis2-dx9/1.0.0.zip",
+      "bytes": 210,
+      "sha256": "4ceca310cb7f1dba516e9d09039c8ea81fc317f3758c6ce4576da19904bffa9a"
     }
   ]
 }
