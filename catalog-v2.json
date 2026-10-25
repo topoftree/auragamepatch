@@ -82,22 +82,6 @@
       "category": "widescreen"
     },
     {
-      "id": "mirrors-edge-widescreen-tool",
-      "version": "4.5.0-beta3",
-      "title": "Mirror’s Edge · Widescreen repair tool",
-      "description": "Mirror’s Edge Tweaks 4.5.0-beta3 by softsoundd. Interactive Windows tool requiring .NET 10; downloading is not applying the widescreen fix. Follow README instructions to apply FOV/resolution changes. Aura only manages removal of this downloaded tool, not game changes made later by the tool. Original tool, matching source and license notices are included in the repository.",
-      "executables": [
-        "MirrorsEdge.exe"
-      ],
-      "path": "packages/mirrors-edge-widescreen-tool/4.5.0-beta3.zip",
-      "bytes": 3982979,
-      "sha256": "586c66f7bf07a18e7f1328ee7b515f6c19ca3f1ec5ee7174f81f3986a74f2681",
-      "kind": "tool",
-      "policy": "",
-      "game": "mirrors-edge-2008",
-      "category": "tool"
-    },
-    {
       "id": "stardew-fps-experimental",
       "version": "1.0.0-aura1",
       "title": "Stardew Valley · Experimental FPS unlock (SMAPI)",

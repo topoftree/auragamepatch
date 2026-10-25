@@ -1,0 +1,42 @@
+{
+  "schema": "AURA_CATALOGUE_RETIREMENT_V1",
+  "retiredId": "mirrors-edge-widescreen-tool",
+  "replacementId": "mirrors-edge-widescreen-195",
+  "activeCatalogEntries": 8,
+  "legacyCatalogUnchanged": true,
+  "publishedArtifactsUnchanged": true,
+  "otherEntriesUnchanged": true,
+  "protectedFiles": 41,
+  "appCommit": "d9a95c6cabb6309138aec737ac9f9a24547c5b7c",
+  "appTests": [
+    {
+      "name": "dev.aura.console.data.GamePatchLifecycleTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "dev.aura.console.data.GamePatchPackageTest",
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "dev.aura.console.data.MirrorsEdgeWidescreenTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "1"
+    }
+  ],
+  "appPassed": 24,
+  "appSkipped": 1,
+  "releaseToolTests": 10,
+  "userFeedback": {
+    "newPatchEffective": true,
+    "source": "USER_REPORT",
+    "maintainerDeviceTest": false
+  }
+}

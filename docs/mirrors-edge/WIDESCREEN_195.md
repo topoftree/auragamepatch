@@ -1,8 +1,8 @@
 # Mirror’s Edge（2008）19.5:9 直接安装补丁
 
-在 **Game Management → Mirror’s Edge → Patch → Download patch** 选择 **Mirror’s Edge · 19.5:9 widescreen (direct install)**。最低 **Aura versionCode 137**；需要后续新版 APK，现有 0.1.135（code 136）会隐藏此条目。不要在旧版 App 手动导入这个 schema 2 包。
+在 **Game Management → Mirror’s Edge → Patch → Download patch** 选择 **Mirror’s Edge · 19.5:9 widescreen (direct install)**。最低 **Aura versionCode 137**；0.1.135（code 136）会隐藏此条目。不要在旧版 App 手动导入这个 schema 2 包。
 
-此包是可直接应用的资源字节配方。原来的 **Mirror’s Edge Tweaks** 条目仍是交互工具；只下载该工具不会应用宽屏。新包不需要另开 Tweaks 或安装 .NET，也不自动执行任何脚本。
+此包是可直接应用的资源字节配方。原来的 **Mirror’s Edge Tweaks / Widescreen repair tool** 是交互工具，只下载不会应用宽屏，现已从新版 v2 下载目录撤下。新包不需要另开 Tweaks 或安装 .NET，也不自动执行任何脚本。
 
 适用于 19.5:9，例如 **1560×720、2340×1080、3120×1440**。完全退出游戏后安装，游戏内选择对应分辨率及全屏，再重新启动。其他屏幕比例不要套用此包；这不是随意分辨率的动态修复。它不附加可调 FOV、HUD 或预录影片修复，不保证开场影片铺满屏幕。
 
@@ -10,7 +10,7 @@
 
 目标为 `Binaries/MirrorsEdge.exe` 所属游戏根目录内的 `TdGame/CookedPC/Engine.u`，只将一处小端 float `f38ee33f`（约 16:9）改为 `abaa0a40`（19.5:9）。不改 EXE，因此可以与 `mirrors-edge-time` 启动兼容补丁同时使用。
 
-支持下表四个完整资源基线。安装会核对文件大小、完整修改前 SHA-256、编辑点旧字节及完整修改后 SHA-256。文件名相同不代表版本相同；其他发行版或已经被 Tweaks／模组改过的资源会拒绝安装并保留原文件。用户设备的资源版本尚未读取，不能保证必然匹配。
+支持下表四个完整资源基线。安装会核对文件大小、完整修改前 SHA-256、编辑点旧字节及完整修改后 SHA-256。文件名相同不代表版本相同；其他发行版或已经被 Tweaks／模组改过的资源会拒绝安装并保留原文件。用户反馈新包已生效，但尚无该次资源哈希记录，不能据此确定具体命中了哪个基线或推广为所有版本支持。
 
 | 基线 | 字节数 | 编辑偏移（十进制） |
 | --- | ---: | ---: |
@@ -27,7 +27,9 @@
 
 启动诊断 `MIRRORS_EDGE_WIDESCREEN_V1 resource=BYTES_VERIFIED` 表示本次启动前重新核对了已安装文件的完整哈希。`MISMATCH` 表示文件与安装记录不同。两者都不代替游戏画面验证，`game_effect=UNCONFIRMED` 保持明确。
 
-实物资源校验、App 安装／恢复及负面用例见 [验证记录](widescreen-195-validation.json)。**手机关卡内黑边是否消失仍需复测；未生成或交付新版 APK。**
+实物资源校验、App 安装／恢复及负面用例见 [初次验证记录](widescreen-195-validation.json)。**2026-10-25 用户反馈安装新包后已实现宽屏**；这是该用户设备的使用反馈，不是维护环境完成的手机测试，也不证明所有设备、比例或预录影片均适用。
+
+旧工具从下载列表撤下不会移除设备上的已安装记录、工具文件或恢复备份。新包与旧工具不互相依赖；若旧工具仅下载而未另行运行，可从旧条目卸载／删除工具文件。若曾通过 Tweaks 修改游戏，Aura 的工具下载回滚不包含它后来自行做的修改，应遵循工具自身的恢复记录。仓库保留旧 ZIP、源码和许可供历史核验。
 
 ## 来源与复现
 

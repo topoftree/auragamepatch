@@ -16,9 +16,6 @@
     "fix": [
       "mirrors-edge-time"
     ],
-    "tool": [
-      "mirrors-edge-widescreen-tool"
-    ],
     "widescreen": [
       "mirrors-edge-widescreen-195"
     ]
