@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "patch": "mirrors-edge-widescreen-195",
+  "version": "1.0.0",
+  "appCommit": "c043802a4e9951f246cf2bf9e943f8e4b9d5b394",
+  "minAppVersionCode": 137,
+  "installRestoreTested": true,
+  "versionMismatchTested": true,
+  "activationTested": true,
+  "activationScope": "Host App file transactions and startup hash diagnostic; not phone gameplay",
+  "appTests": {
+    "suites": [
+      {
+        "name": "dev.aura.console.data.GamePatchAutomaticTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.data.GamePatchLifecycleTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.data.GamePatchPackageTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.data.MirrorsEdgeWidescreenTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.runtime.Battlefield3DisplayDiagnosticsTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.runtime.GameDiagnosticBundleTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.runtime.GameDisplayGeometryTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "dev.aura.console.runtime.RuntimeDisplayDiagnosticsTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "total": 65,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "releaseToolTests": {
+    "total": 10,
+    "failures": 0
+  },
+  "resourceValidation": {
+    "schema": 1,
+    "aspect": "19.5:9",
+    "results": [
+      {
+        "edition": "Base",
+        "compressedBefore": "8c8a4c79fcffccc4882d27ffe522bc299b67d423595b921e0fac518ef5b8e7fb",
+        "compressedAfter": "23a8b27d87c05ec84b6bdfb085457c44252da804d7ecacbe01aeed64dd09c610",
+        "decodedBefore": "91bfb02c1ef3cd2eb2df51b38d9f05263be531f3464ec4033d301a391930d290",
+        "decodedAfter": "db66dec9ad5f2544aa59c5e6cf40c968cd9f2661b8a461c6dbb255f4ab20b596",
+        "decodedChangedBytes": 4,
+        "decodeSuccess": true,
+        "apkTested": false,
+        "phoneGameplayTested": false
+      },
+      {
+        "edition": "DLC",
+        "compressedBefore": "a861e83cee78907e60825f11f9dee51dc40e3d349a4263f1548e1bdf7970cc07",
+        "compressedAfter": "a2c59dfef484e2318c765d50f9d4a06936a532ece929d355ba72d5dc2b18fb9f",
+        "decodedBefore": "207afd78eacdd84ee2147dd414f18aa82678b0a43720fbf1a210d81a029fb5f9",
+        "decodedAfter": "ad5e434f1066118767c1bc21ccfd1f0b363c6790dd7029a69dbc989793e87491",
+        "decodedChangedBytes": 4,
+        "decodeSuccess": true,
+        "apkTested": false,
+        "phoneGameplayTested": false
+      }
+    ]
+  },
+  "checks": [
+    "Complete before/after file hashes for Base/DLC compressed and decompressed resources",
+    "Patched compressed resources decode successfully; decoded differences are exactly the intended four bytes",
+    "Install, disable, re-enable, uninstall-retain, offline re-enable and delete/restore",
+    "Coexistence with a separate EXE compatibility edit",
+    "Unknown version, malformed target/policy, wrong checksum, symlink, manual overwrite and post-plan mutation refusal",
+    "Older App code 136 hides new policy; minimum 137; automatic installation forbidden",
+    "New BF3 fixed-field profile and display sampling tests included separately in the App suites"
+  ],
+  "source": {
+    "method": "https://www.wsgf.org/dr/mirrors-edge",
+    "referenceRelease": "https://github.com/softsoundd/MirrorsEdgeTweaks/releases/tag/runtime-assets",
+    "BaseZipSHA256": "e53fffb1af62e3f3284ba1877367e0e224ddec8c3402b3dbf441bd3a4d24c09e",
+    "DLCZipSHA256": "54d95f53c230e44ae6b4cb209dca3bd216cdebf002142fd02804c0f5ad2878e3",
+    "lzokayVersion": "2.1.0"
+  },
+  "boundaries": {
+    "userDeviceResourceHashKnown": false,
+    "phoneGameplayTested": false,
+    "apkBuilt": false,
+    "apkDelivered": false,
+    "privateAppSourcePushed": false,
+    "gameResourcesIncluded": false
+  },
+  "reproduce": [
+    "python3 tools/verify_mirrors_edge_widescreen.py --reference-dir <external reference ZIP directory>",
+    "python3 -m unittest discover -s tools/tests -v",
+    "python3 tools/patch_release.py check",
+    "App Gradle testDebugUnitTest: eight named suites in appTests, with external reference directory passed as aura.mirrorsEdge.validation"
+  ]
+}

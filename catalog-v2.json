@@ -130,6 +130,23 @@
       "path": "packages/crysis2-dx9/1.0.0.zip",
       "bytes": 210,
       "sha256": "4ceca310cb7f1dba516e9d09039c8ea81fc317f3758c6ce4576da19904bffa9a"
+    },
+    {
+      "id": "mirrors-edge-widescreen-195",
+      "version": "1.0.0",
+      "title": "Mirror’s Edge · 19.5:9 widescreen (direct install)",
+      "description": "Applies the 19.5:9 aspect-ratio fix directly to the verified Engine.u resource (for example 1560×720). No Tweaks tool or .NET is required. Supports the listed Base/DLC compressed and decompressed baselines; other modified resources are rejected. Keeps the executable and its startup compatibility patch unchanged. Disable or uninstall to restore the original resource. Use 1560×720/fullscreen in game; other aspect ratios need another recipe. Does not add configurable FOV, HUD or pre-rendered video fixes. Phone gameplay verification is pending. Requires the next Aura build (versionCode 137+).",
+      "executables": [
+        "MirrorsEdge.exe"
+      ],
+      "kind": "binary",
+      "policy": "mirrors-edge-widescreen-195",
+      "game": "mirrors-edge-2008",
+      "category": "widescreen",
+      "minAppVersionCode": 137,
+      "path": "packages/mirrors-edge-widescreen-195/1.0.0.zip",
+      "bytes": 742,
+      "sha256": "49f628306bd87f1dfb68603518962eaa7661b80c8866131fa4ca13e8675b4d4b"
     }
   ]
 }

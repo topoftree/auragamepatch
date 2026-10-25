@@ -73,7 +73,8 @@ def validate_entry(entry, classified=True):
     kind, policy = entry["kind"], entry.get("policy", "")
     require(kind in {"profile", "binary", "files", "tool"}, "Unsupported kind")
     policies = {"bf3-single-player": ("profile", "bf3.exe"), "mgs-startup": ("profile", "mgsgroundzeroes.exe"),
-                "winmm-native": ("files", "mgsgroundzeroes.exe"), "crysis2-dx9": ("profile", "crysis2.exe")}
+                "winmm-native": ("files", "mgsgroundzeroes.exe"), "crysis2-dx9": ("profile", "crysis2.exe"),
+                "mirrors-edge-widescreen-195": ("binary", "mirrorsedge.exe")}
     if policy:
         require(policy in policies and policies[policy][0] == kind and
                 all(x.lower() == policies[policy][1] for x in exes), "Unsupported app launch policy")
@@ -82,6 +83,10 @@ def validate_entry(entry, classified=True):
     if policy == "crysis2-dx9":
         require(entry["id"] == "crysis2-dx9" and entry.get("minAppVersionCode", 1) >= 123,
                 "Crysis 2 DX9 requires its fixed identity and App code 123 or later")
+    if policy == "mirrors-edge-widescreen-195":
+        require(entry["id"] == policy and entry.get("minAppVersionCode", 1) >= 137 and
+                entry.get("category") == "widescreen" and not entry.get("autoInstall"),
+                "Mirror's Edge resource patch requires App 137 and manual widescreen selection")
     if classified:
         require(SLUG.fullmatch(entry["game"]) and entry["category"] in CATEGORIES, "Missing game/category")
     auto = entry.get("autoInstall")
@@ -115,8 +120,8 @@ def validate_package(entry, data):
             require(not info.is_dir() and (info.external_attr >> 16) & 0o170000 != 0o120000, "Link/directory in archive")
         require(archive.getinfo("manifest.json").file_size <= 1024 * 1024, "Manifest too large")
         manifest = json.loads(archive.read("manifest.json"))
-        require(set(manifest) <= {"schema", "id", "version", "kind", "policy", "files", "binary"}, "Unknown manifest fields")
-        require(manifest["schema"] == 1 and all(manifest.get(k, "") == entry.get(k, "") for k in ("id", "version", "kind", "policy")), "Manifest mismatch")
+        require(set(manifest) <= {"schema", "id", "version", "kind", "policy", "files", "binary", "resourceBinary"}, "Unknown manifest fields")
+        require(all(manifest.get(k, "") == entry.get(k, "") for k in ("id", "version", "kind", "policy")), "Manifest mismatch")
         files = manifest.get("files", [])
         require(set(names) == {"manifest.json"} | {x["source"] for x in files}, "Undeclared ZIP contents")
         require(len({x["target"].lower() for x in files}) == len(files), "Duplicate target")
@@ -126,17 +131,24 @@ def validate_package(entry, data):
             require(item["source"].startswith("files/") and digest(archive.read(item["source"])) == item["sha256"], "File checksum mismatch")
         kind = manifest["kind"]
         binary = manifest.get("binary")
+        resource = manifest.get("resourceBinary")
+        if resource is None:
+            require(manifest["schema"] == 1 and manifest.get("policy") != "mirrors-edge-widescreen-195", "Invalid schema")
+        else:
+            require(manifest["schema"] == 2 and kind == "binary" and binary is None and not files and
+                    entry.get("policy") == "mirrors-edge-widescreen-195", "Unsupported resource policy")
+            require(set(resource) == {"path", "variants"} and resource["path"] == "TdGame/CookedPC/Engine.u", "Unsupported resource target")
+            variants = resource["variants"]
+            require(1 <= len(variants) <= 8 and len({x["before"] for x in variants}) == len(variants), "Invalid resource variants")
+            for variant in variants:
+                validate_binary(variant)
+                require(variant["bytes"] <= 16 * 1024 * 1024 and len(variant["edits"]) == 1 and
+                        variant["edits"][0]["before"] == "f38ee33f" and variant["edits"][0]["after"] == "abaa0a40",
+                        "Resource policy only changes one aspect-ratio float to 19.5:9")
         if kind == "binary":
-            require(not files and binary is not None and set(binary) == {"bytes", "before", "after", "edits"}, "Invalid binary recipe")
-            require(0 < binary["bytes"] <= 512 * 1024 * 1024 and SHA.fullmatch(binary["before"]) and SHA.fullmatch(binary["after"]), "Invalid executable identity")
-            require(0 < len(binary["edits"]) <= 256, "Invalid edit count")
-            end = 0
-            for edit in sorted(binary["edits"], key=lambda x: x["offset"]):
-                require(set(edit) == {"offset", "before", "after"}, "Unknown edit fields")
-                for side in ("before", "after"):
-                    require(re.fullmatch(r"[0-9a-f]{2,2048}", edit[side]) and len(edit[side]) % 2 == 0, "Invalid patch bytes")
-                require(len(edit["before"]) == len(edit["after"]) and end <= edit["offset"] <= binary["bytes"] - len(edit["before"]) // 2, "Overlapping/outside edits")
-                end = edit["offset"] + len(edit["before"]) // 2
+            require(not files and (binary is not None or resource is not None), "Invalid binary recipe")
+            if binary is not None:
+                validate_binary(binary)
             if entry.get("autoInstall"):
                 require(entry["autoInstall"]["executable"] == {"bytes": binary["bytes"], "sha256": binary["before"]}, "Auto/binary baseline differs")
         elif kind == "profile":
@@ -145,6 +157,21 @@ def validate_package(entry, data):
             require(files and binary is None, "File/tool package is empty")
         if entry.get("autoInstall") and kind == "files":
             require({x["target"].lower() for x in files} == {x["path"].lower() for x in entry["autoInstall"]["targets"]}, "Missing automatic target baseline")
+
+
+def validate_binary(binary):
+    require(set(binary) == {"bytes", "before", "after", "edits"}, "Invalid binary fields")
+    require(type(binary["bytes"]) is int and 0 < binary["bytes"] <= 512 * 1024 * 1024 and
+            SHA.fullmatch(binary["before"]) and SHA.fullmatch(binary["after"]), "Invalid binary identity")
+    require(0 < len(binary["edits"]) <= 256, "Invalid edit count")
+    end = 0
+    for edit in sorted(binary["edits"], key=lambda x: x["offset"]):
+        require(set(edit) == {"offset", "before", "after"}, "Unknown edit fields")
+        for side in ("before", "after"):
+            require(re.fullmatch(r"[0-9a-f]{2,2048}", edit[side]) and len(edit[side]) % 2 == 0, "Invalid patch bytes")
+        require(type(edit["offset"]) is int and len(edit["before"]) == len(edit["after"]) and
+                end <= edit["offset"] <= binary["bytes"] - len(edit["before"]) // 2, "Overlapping/outside edits")
+        end = edit["offset"] + len(edit["before"]) // 2
 
 
 def verify_signature(root, stem):
@@ -231,7 +258,7 @@ def add(root, recipe_path, key):
     catalog = check(root)
     require(catalog["schema"] == 2, "Initialize the classified v2 catalogue first")
     recipe = json.loads(recipe_path.read_bytes())
-    require(set(recipe) <= {"schema", "entry", "files", "binary", "provenance"} and recipe["schema"] == 1, "Invalid recipe")
+    require(set(recipe) <= {"schema", "entry", "files", "binary", "resourceBinary", "provenance"} and recipe["schema"] in (1, 2), "Invalid recipe")
     entry = dict(recipe["entry"])
     require(not {"bytes", "sha256", "path"} & entry.keys(), "Generated fields must not be supplied")
     expected = f'recipes/{entry["game"]}/{entry["category"]}/{entry["id"]}/{entry["version"]}/recipe.json'
@@ -245,7 +272,7 @@ def add(root, recipe_path, key):
         for test in ("installRestoreTested", "versionMismatchTested", "activationTested"):
             require(evidence.get(test) is True, "Missing automatic integration evidence: " + test)
         require(re.fullmatch("[0-9a-f]{40}", evidence.get("appCommit", "")), "Pin tested app source commit")
-    manifest = dict(schema=1, **{k: entry[k] for k in ("id", "version", "kind")}, policy=entry.get("policy", ""), files=[])
+    manifest = dict(schema=recipe["schema"], **{k: entry[k] for k in ("id", "version", "kind")}, policy=entry.get("policy", ""), files=[])
     payloads = {}
     require(len(recipe.get("files", [])) <= 255, "Too many input files")
     expanded = 0
@@ -262,6 +289,8 @@ def add(root, recipe_path, key):
         manifest["files"].append(dict(source=name, target=item["target"], sha256=digest(data)))
     if "binary" in recipe:
         manifest["binary"] = recipe["binary"]
+    if "resourceBinary" in recipe:
+        manifest["resourceBinary"] = recipe["resourceBinary"]
     payloads["manifest.json"] = encoded(manifest)
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:

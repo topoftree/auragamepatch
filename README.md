@@ -14,6 +14,7 @@ Aura 的游戏专用兼容补丁、宽屏工具和模组仓库。应用按实际
 | Battlefield 3 | 单人兼容 | 下载启动配置，只对 `bf3.exe` 禁用可选 `pbcl` / `pbcl64` 加载 | 删除配置，下次启动恢复原行为 |
 | Metal Gear Solid V: Ground Zeroes | 启动兼容 | 下载配置，启用配套 Wine/FEX 的 image-page 与 tick-thunk 支持 | 删除配置，下次启动停用 |
 | Mirror’s Edge（2008） | 时间转换启动修复 | 校验完整 EXE 哈希后应用少量字节修改 | 使用本机原文件备份恢复 |
+| Mirror’s Edge（2008） | [19.5:9 宽屏直接安装](docs/mirrors-edge/WIDESCREEN_195.md) | **App code 137+**；校验 Base／DLC 资源后改一处宽高比，不需另开工具，手动选择 | 关闭／卸载恢复完整资源，保留 EXE 启动兼容补丁 |
 | South Park: The Fractured But Whole | 虚拟地址分配兼容 | 校验完整 EXE 哈希后修改分配参数 | 使用本机原文件备份恢复 |
 | Ground Zeroes | MGSVFix 0.0.3 宽屏 | 自动安装 ASI / DLL / INI，并设置此游戏的 `winmm=n,b` | 删除新增文件、恢复原文件并取消该启动覆盖 |
 | Mirror’s Edge（2008） | Mirror’s Edge Tweaks 4.5.0-beta3 | **交互式工具下载，需要另行运行；下载不代表已应用宽屏** | Aura 管理工具文件；工具后来修改的游戏文件由工具自身的备份/恢复功能管理 |
@@ -43,7 +44,7 @@ StardewFPS 的目录分类是 `mod`，因此不出现在新版 Download patch �
 
 新版协议使用独立签名的 `catalog-v2.json` / `catalog-v2.sig`。配套 App 代码在新会话准备时检查补丁，只有显式声明 `autoInstall`、满足最低 App 版本、EXE 完整哈希及所有目标原文件基线的兼容／错误修复才会下载、备份并启用。手动关闭、卸载、删除以及已有版本都优先，不自动替换。离线或下载失败可在 Patch 页面重试／导入；中断的写入必须先恢复。
 
-**0.1.121 不含此自动安装协议或新的 Crysis 2 启动策略；需要 Aura 0.1.122（versionCode 123）或更新构建，APK 交付见 Aura 版本说明。** 当前八个包均保留手动选择，不将历史实验包追溯改成自动安装。可选 Crysis 2 DX9、BF3 单人模式、宽屏、FPS 模组、交互工具不属于自动修复；安装成功也不代表手机效果已经验证。
+**0.1.121 不含此自动安装协议或新的 Crysis 2 启动策略；需要 Aura 0.1.122（versionCode 123）或更新构建，APK 交付见 Aura 版本说明。** 当前九个包均保留手动选择，不将历史实验包追溯改成自动安装。可选 Crysis 2 DX9、BF3 单人模式、宽屏、FPS 模组、交互工具不属于自动修复；安装成功也不代表手机效果已经验证。
 
 游戏专用的 EXE 补丁采用完整文件大小、原 SHA-256、逐字节原值与修改后 SHA-256 校验；其他版本会拒绝安装，不能靠重命名文件强行适配。请先恢复旧版 Aura 专用兼容，再安装同一修复的新包。旧版已应用的修改和本地备份保留供恢复。
 
@@ -57,7 +58,9 @@ StardewFPS 的目录分类是 `mod`，因此不出现在新版 Download patch �
 
 已提供 [StardewFPS 使用说明](docs/STARDEW_FPS.md)、[Aura 安装包](packages/stardew-fps-experimental/1.0.0-aura1.zip)、原始模组、对应源码和 MIT 许可。新版入口是 **Mod → Download mod → Experimental FPS unlock (SMAPI)**。需要通过 Windows 版 SMAPI 启动，在加载存档后关闭游戏 VSync，并在 SMAPI 控制台输入 `fps 120`。包本身只有模组；带依赖管理的 Aura 可为已选择／启用的模组自动补齐固定版本 SMAPI，并切换启动入口，但不自动输入 fps 命令。它会改变动画和敌人速度，不能解决当前低于 60 FPS 的渲染开销。手机 Wine/ARM64EC 兼容性尚未验证。
 
-## 两个宽屏资源
+## 宽屏补丁与工具
+
+Mirror’s Edge 新增 [19.5:9 直接安装包](docs/mirrors-edge/WIDESCREEN_195.md)，适用于 1560×720 等相同比例。**需要后续 code 137+ APK，0.1.135 不支持。** 旧 Tweaks 工具条目保留；两者不是需要一起安装的依赖。
 
 原始包保持上游字节不变，位于 [upstream](upstream)。签名目录使用的 Aura 安装包位于 [packages](packages)。
 
@@ -79,7 +82,7 @@ StardewFPS 的目录分类是 `mod`，因此不出现在新版 Download patch �
 
 ## 目录、校验与维护
 
-- [catalog-v2.json](catalog-v2.json)：版本 2 签名目录，含游戏分类及未来精确匹配的自动安装规则；当前八个包不自动安装。
+- [catalog-v2.json](catalog-v2.json)：版本 2 签名目录，含游戏分类及未来精确匹配的自动安装规则；当前九个包不自动安装。
 - [catalog.json](catalog.json)：保留严格版本 1 客户端的原始目录及签名，不向它添加新协议字段。
 - [catalog.sig](catalog.sig)、[catalog-public-key.pem](catalog-public-key.pem)：Ed25519 分离签名与公钥。签名私钥不在公开仓库，也不是 APK 签名密钥。
 - [SHA256SUMS](SHA256SUMS)：安装包、上游原始包及源码归档的校验值。

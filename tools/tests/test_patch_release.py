@@ -1,4 +1,5 @@
 import base64
+import copy
 import importlib.util
 import json
 import subprocess
@@ -120,6 +121,56 @@ class PatchReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "remain manual"):
             release.validate_entry(entry | {"autoInstall": {"minAppVersionCode": 123,
                 "executable": {"bytes": 40670208, "sha256": "0" * 64}}})
+
+    def resource_recipe(self):
+        path = self.recipe()
+        value = json.loads(path.read_bytes())
+        value["schema"] = 2
+        value.pop("binary")
+        entry = value["entry"]
+        entry.pop("autoInstall")
+        entry.update(id="mirrors-edge-widescreen-195", policy="mirrors-edge-widescreen-195",
+                     game="mirrors-edge", category="widescreen", executables=["MirrorsEdge.exe"], minAppVersionCode=137)
+        value["resourceBinary"] = dict(path="TdGame/CookedPC/Engine.u", variants=[dict(
+            bytes=4, before=release.digest(bytes.fromhex("f38ee33f")), after=release.digest(bytes.fromhex("abaa0a40")),
+            edits=[dict(offset=0, before="f38ee33f", after="abaa0a40")])])
+        target = self.root / "recipes/mirrors-edge/widescreen/mirrors-edge-widescreen-195/1.0.0/recipe.json"
+        target.parent.mkdir(parents=True)
+        target.write_bytes(release.encoded(value))
+        return target, value
+
+    def test_resource_schema_two_is_reproducible_and_keeps_v1_unchanged(self):
+        path, _ = self.resource_recipe()
+        old = (self.root / "catalog.json").read_bytes()
+        old_signature = (self.root / "catalog.sig").read_bytes()
+        release.add(self.root, path, self.key)
+        first = (self.root / "packages/mirrors-edge-widescreen-195/1.0.0.zip").read_bytes()
+        release.add(self.root, path, self.key)
+        self.assertEqual(first, (self.root / "packages/mirrors-edge-widescreen-195/1.0.0.zip").read_bytes())
+        self.assertEqual(old, (self.root / "catalog.json").read_bytes())
+        self.assertEqual(old_signature, (self.root / "catalog.sig").read_bytes())
+        self.assertEqual(137, release.check(self.root)["patches"][0]["minAppVersionCode"])
+
+    def test_resource_recipe_rejects_wrong_scope_and_unsupported_versions(self):
+        path, value = self.resource_recipe()
+        invalid = []
+        for change in ({"minAppVersionCode": 136}, {"category": "fix"}, {"executables": ["bf3.exe"]},
+                       {"autoInstall": {"minAppVersionCode": 137, "executable": {"bytes": 4, "sha256": "0" * 64}}}):
+            candidate = copy.deepcopy(value)
+            candidate["entry"].update(change)
+            # Preserve the intended recipe folder to test entry checks directly.
+            entry = candidate["entry"] | dict(path="packages/mirrors-edge-widescreen-195/1.0.0.zip", bytes=1, sha256="0" * 64)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                release.validate_entry(entry)
+        candidate = copy.deepcopy(value); candidate["schema"] = 1; invalid.append(candidate)
+        candidate = copy.deepcopy(value); candidate["resourceBinary"]["path"] = "../Engine.u"; invalid.append(candidate)
+        candidate = copy.deepcopy(value); candidate["resourceBinary"]["variants"] *= 2; invalid.append(candidate)
+        candidate = copy.deepcopy(value); candidate["resourceBinary"]["variants"][0]["edits"][0]["after"] = "00000000"; invalid.append(candidate)
+        for candidate in invalid:
+            path.write_bytes(release.encoded(candidate))
+            with self.assertRaises(ValueError):
+                release.add(self.root, path, self.key)
+        self.assertFalse((self.root / "packages/mirrors-edge-widescreen-195/1.0.0.zip").exists())
 
 
 if __name__ == "__main__":

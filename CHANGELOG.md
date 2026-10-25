@@ -1,5 +1,11 @@
 # 更新记录
 
+## 2026-10-25 — Mirror’s Edge 19.5:9 直接宽屏资源补丁
+
+- 新增手动 `mirrors-edge-widescreen-195` 1.0.0，直接校验并修改已知 Base／DLC 的 Engine.u 宽高比；仅四字节配方，不分发游戏资源，不依赖运行 Tweaks 或 .NET。原工具和全部旧包保留，EXE 启动兼容修复可并存。
+- App code 137 起支持受限 schema 2 资源变体、完整前后哈希与备份恢复；旧 App 隐藏此条目，需后续新版 APK。固定 19.5:9，其他比例、可调 FOV／HUD／影片不属于该包范围。
+- 四个实际参考资源安装恢复与修改后解压差分验证通过；65 项配套 App 检查、10 项发布工具测试通过。原 v1 目录不改写；手机画面及用户本地资源版本匹配仍需复测。见 [使用说明](docs/mirrors-edge/WIDESCREEN_195.md)及 [验证记录](docs/mirrors-edge/widescreen-195-validation.json)。
+
 ## 2026-10-23 — 修正 StardewFPS 的新版下载入口说明
 
 - 从 GitHub 固定提交及 App 使用的 main 目录回读确认 StardewFPS 1.0.0-aura1 仍存在，目录签名和安装包完整哈希通过；未重复上传或改写已发布包。

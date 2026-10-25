@@ -1,0 +1,75 @@
+{
+  "schema": 2,
+  "entry": {
+    "id": "mirrors-edge-widescreen-195",
+    "version": "1.0.0",
+    "title": "Mirror’s Edge · 19.5:9 widescreen (direct install)",
+    "description": "Applies the 19.5:9 aspect-ratio fix directly to the verified Engine.u resource (for example 1560×720). No Tweaks tool or .NET is required. Supports the listed Base/DLC compressed and decompressed baselines; other modified resources are rejected. Keeps the executable and its startup compatibility patch unchanged. Disable or uninstall to restore the original resource. Use 1560×720/fullscreen in game; other aspect ratios need another recipe. Does not add configurable FOV, HUD or pre-rendered video fixes. Phone gameplay verification is pending. Requires the next Aura build (versionCode 137+).",
+    "executables": [
+      "MirrorsEdge.exe"
+    ],
+    "kind": "binary",
+    "policy": "mirrors-edge-widescreen-195",
+    "game": "mirrors-edge-2008",
+    "category": "widescreen",
+    "minAppVersionCode": 137
+  },
+  "resourceBinary": {
+    "path": "TdGame/CookedPC/Engine.u",
+    "variants": [
+      {
+        "bytes": 1662824,
+        "before": "8c8a4c79fcffccc4882d27ffe522bc299b67d423595b921e0fac518ef5b8e7fb",
+        "after": "23a8b27d87c05ec84b6bdfb085457c44252da804d7ecacbe01aeed64dd09c610",
+        "edits": [
+          {
+            "offset": 645379,
+            "before": "f38ee33f",
+            "after": "abaa0a40"
+          }
+        ]
+      },
+      {
+        "bytes": 1669463,
+        "before": "a861e83cee78907e60825f11f9dee51dc40e3d349a4263f1548e1bdf7970cc07",
+        "after": "a2c59dfef484e2318c765d50f9d4a06936a532ece929d355ba72d5dc2b18fb9f",
+        "edits": [
+          {
+            "offset": 646328,
+            "before": "f38ee33f",
+            "after": "abaa0a40"
+          }
+        ]
+      },
+      {
+        "bytes": 6109346,
+        "before": "91bfb02c1ef3cd2eb2df51b38d9f05263be531f3464ec4033d301a391930d290",
+        "after": "db66dec9ad5f2544aa59c5e6cf40c968cd9f2661b8a461c6dbb255f4ab20b596",
+        "edits": [
+          {
+            "offset": 2694461,
+            "before": "f38ee33f",
+            "after": "abaa0a40"
+          }
+        ]
+      },
+      {
+        "bytes": 6113320,
+        "before": "207afd78eacdd84ee2147dd414f18aa82678b0a43720fbf1a210d81a029fb5f9",
+        "after": "ad5e434f1066118767c1bc21ccfd1f0b363c6790dd7029a69dbc989793e87491",
+        "edits": [
+          {
+            "offset": 2695252,
+            "before": "f38ee33f",
+            "after": "abaa0a40"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "upstream": "https://www.wsgf.org/dr/mirrors-edge",
+    "license": "LICENSE",
+    "validation": "docs/mirrors-edge/widescreen-195-validation.json"
+  }
+}

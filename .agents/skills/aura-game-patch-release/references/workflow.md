@@ -29,6 +29,8 @@ catalog.json + catalog.sig              # 旧版客户端保留
 
 `files` 是 `[{"source":"payload/fix.dll","target":"fix.dll"}]`；source 必须在此配方目录内，target 相对真实启动 EXE 目录。`binary` 对应 App 的 `PackageBinaryPatch`：`bytes/before/after/edits`，每项 edit 为 `offset/before/after`。
 
+资源差分使用 recipe／manifest `schema: 2` 与 `resourceBinary: {path, variants}`；每项 variant 的结构同 `binary`。当前仅白名单 `mirrors-edge-widescreen-195`，目标固定 `TdGame/CookedPC/Engine.u`，由 `Binaries/MirrorsEdge.exe` 向同游戏根目录解析，不接受 `../`。每变体最多 16 MiB、完整前后哈希、且只允许一处固定 16:9 → 19.5:9 float 修改；至少 App code 137，保持手动选择。schema 1 不可塞入此新能力，旧包及目录保留。
+
 `provenance` 包含：`upstream`（来源 HTTPS URL）、`license`（仓库内许可文件）、`validation`（仓库内验证文件）。自动安装的验证文件为 JSON，包含真实的 `installRestoreTested/versionMismatchTested/activationTested` 布尔结果和所测试 App 的完整 `appCommit`，并附测试命令、结果及手机是否验证等证据。不得只为通过校验填写 true。
 
 自动规则形状（示意，不能将占位内容签入真实目录）：
