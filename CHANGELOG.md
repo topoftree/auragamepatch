@@ -1,37 +1,37 @@
-# 更新记录
+# Changelog
 
-## 2026-10-26 — Cuphead 宽屏外部来源索引
+## 2026-10-26 — Cuphead widescreen source links
 
-- 收录 Cuphead UltraWide 1.1.0 的原始下载页、BepInEx／架构要求、画面限制及旧方案差异。
-- 作者页禁止未经许可转载，尚无本仓库可用的发布授权；本次不镜像 DLL／ZIP，不改签名目录或宣称 App 已支持自动安装。保留后续授权、精确基线与完整生命周期验证要求。
+- Added the original Cuphead UltraWide 1.1.0 download pages, BepInEx and architecture requirements, visual limitations, and differences from older fixes.
+- Listed the original links because the author prohibits unauthorized reuploads and this repository has no redistribution permission. The DLL and ZIP were not mirrored, the signed catalog did not change, and Aura automatic installation remains unimplemented. A future package still requires permission, an exact game baseline, and full lifecycle verification.
 
-## 2026-10-25 — 撤下旧 Mirror’s Edge 宽屏工具下载入口
+## 2026-10-25 — Removed the old Mirror’s Edge widescreen tool from downloads
 
-- 用户反馈新 19.5:9 直接安装补丁已实现宽屏；将旧 `mirrors-edge-widescreen-tool` 从签名 v2 下载目录和当前分类撤下，减少两个条目的误选。新资源补丁与 EXE 启动修复继续保留，其他条目不变。
-- 保留已发布工具 ZIP、源码、许可证、校验值和严格 v1 目录；设备上的已安装记录、关闭、卸载及离线恢复不依赖当前下载目录，无须删除本机备份。旧工具不是新包的依赖。
-- 更新使用说明区分用户实测反馈、历史安装验证与支持范围；此变更不生成 APK，也不修改游戏文件或新补丁字节。
+- A user reported that the new 19.5:9 direct install patch enabled widescreen. Removed the old `mirrors-edge-widescreen-tool` from the signed v2 download catalog and current category index to prevent confusion between the two entries. The new resource patch, executable startup fix, and other entries were retained.
+- Kept the published tool ZIP, source, licenses, checksums, and strict v1 catalog. Installed entries, disabling, uninstalling, and offline recovery do not depend on the current download catalog. Local backups can stay in place. The new package does not depend on the old tool.
+- Updated the instructions to distinguish user feedback, historical installation verification, and the supported scope. This change did not build an APK or alter game files or the new patch bytes.
 
-## 2026-10-25 — Mirror’s Edge 19.5:9 直接宽屏资源补丁
+## 2026-10-25 — Mirror’s Edge 19.5:9 direct widescreen resource patch
 
-- 新增手动 `mirrors-edge-widescreen-195` 1.0.0，直接校验并修改已知 Base／DLC 的 Engine.u 宽高比；仅四字节配方，不分发游戏资源，不依赖运行 Tweaks 或 .NET。原工具和全部旧包保留，EXE 启动兼容修复可并存。
-- App code 137 起支持受限 schema 2 资源变体、完整前后哈希与备份恢复；旧 App 隐藏此条目，需后续新版 APK。固定 19.5:9，其他比例、可调 FOV／HUD／影片不属于该包范围。
-- 四个实际参考资源安装恢复与修改后解压差分验证通过；65 项配套 App 检查、10 项发布工具测试通过。原 v1 目录不改写；手机画面及用户本地资源版本匹配仍需复测。见 [使用说明](docs/mirrors-edge/WIDESCREEN_195.md)及 [验证记录](docs/mirrors-edge/widescreen-195-validation.json)。
+- Added manual patch `mirrors-edge-widescreen-195` 1.0.0. It verifies known base game and DLC Engine.u files and applies a four-byte aspect-ratio change. The package contains no game assets and does not require Tweaks or .NET. The old tool and previously published packages were retained. The patch can coexist with the executable startup fix.
+- App versionCode 137 adds support for restricted schema 2 resource variants, full before-and-after hashes, and backup recovery. Older App versions hide this entry. A newer APK is required. This package targets 19.5:9 only and does not cover adjustable FOV, HUD, or videos.
+- Installation, restoration, and post-edit decompression checks passed for four reference resources. Also passed 65 App checks and 10 release-tool tests. The original v1 catalog was retained. The in-game result on phones and the match against the user’s local resource version still needed checking. See the [instructions](docs/mirrors-edge/WIDESCREEN_195.md) and [validation record](docs/mirrors-edge/widescreen-195-validation.json).
 
-## 2026-10-23 — 修正 StardewFPS 的新版下载入口说明
+## 2026-10-23 — Corrected the StardewFPS download instructions
 
-- 从 GitHub 固定提交及 App 使用的 main 目录回读确认 StardewFPS 1.0.0-aura1 仍存在，目录签名和安装包完整哈希通过；未重复上传或改写已发布包。
-- README 与使用指南改为 Aura 0.1.125 的 Game Management → Mod → Download mod，解释为何 Download patch 不显示模组；补齐 SMAPI 依赖安装、启用后的启动入口和关闭／卸载／删除区别。
-- 保留实验限制：需手动执行 fps 命令，可能改变动画与敌人速度，不作为低于 60 FPS 的性能修复；不宣称手机兼容已验证。
+- Read back the pinned GitHub commit and the main-branch catalog used by the App. StardewFPS 1.0.0-aura1 remained available, and the catalog signature and full package hash passed. The published package was neither reuploaded nor replaced.
+- Updated the README and guide to use Game Management → Mod → Download mod in Aura 0.1.125 and explain why the mod does not appear in Download patch. Added SMAPI dependency installation, launcher selection, and the differences between disabling, uninstalling, and deleting.
+- Preserved the experiment’s limitations. The FPS command must be entered manually, animation and enemy speeds can change, and this mod does not address performance below 60 FPS. Phone compatibility remained unverified.
 
-## 2026-10-23 — Crysis 2 可选 DX9 profile 1.0.0
+## 2026-10-23 — Crysis 2 optional DX9 profile 1.0.0
 
-- 新增 `crysis-2/compatibility/crysis2-dx9`，使用游戏原生 `-dx9`。精确匹配已核实的 1.9 x86 EXE，最低 Aura 0.1.122 / code 123，不改游戏 EXE／CFG、不自动安装。
-- 配套 App 完成下载／导入、启用／关闭、卸载保留、离线重装、删除及启动参数传递；安装、重新启用与每次启动核实版本。38 项 App 检查和 8 项发布工具测试通过，真实基线仅在私有工作区只读测试。旧包及 v1 目录保持不变。
-- 撤回此前 CFG 对照方法：此游戏构建的白名单过滤 `r_Driver`。实际 DX9 加载、手机启动停滞或裁切改善尚未验证。见 [使用说明](docs/crysis-2/DX9.md)和[验证记录](docs/crysis-2/validation.json)。
+- Added `crysis-2/compatibility/crysis2-dx9` using the game’s built-in `-dx9` argument. It matches the verified 1.9 x86 executable, requires Aura 0.1.122 (versionCode 123), leaves game EXE and CFG files intact, and requires manual selection.
+- Completed App support for downloading and importing, enabling and disabling, retaining the package after uninstall, reinstalling offline, deleting, and passing the launch argument. Aura checks the version on installation, reactivation, and each launch. Passed 38 App checks and eight release-tool tests. The real baseline was checked read-only in a private workspace. The older packages and v1 catalog were retained.
+- Withdrew the earlier CFG comparison because this build’s allowlist filters `r_Driver`. Actual DX9 loading and any improvement to phone startup stalls or cropping remained unverified. See the [instructions](docs/crysis-2/DX9.md) and [validation record](docs/crysis-2/validation.json).
 
-## 2026-10-23 — 游戏补丁维护 skill 与自动安装协议
+## 2026-10-23 — Patch maintenance skill and automatic installation protocol
 
-- 新增项目 skill、AGENTS 触发规则、确定性打包／签名／校验／发布工具和对应测试。用户持续授权后续游戏专用兼容／修复包完成检查后自动发布；不自动发布 App 源码或 APK。
-- 现有七个包按游戏和用途分类，新增签名 v2 目录；旧版目录及所有已发布 ZIP 字节保持原状。新版本必须保留旧包并增加版本。
-- 新自动规则限定修复类别、最低 App 版本、精确 EXE 及目标文件基线，配套 App 源码完成启动前检查、安装启用和手动操作优先。当前七个包仍需手动选择，未发布演示补丁。
-- 更新新版 Patch 页面路径及 SMAPI 依赖说明。本次没有新 APK，现有 0.1.121 不会读取自动安装协议；手机游戏效果未额外验证。
+- Added the repository skill, AGENTS trigger rules, deterministic packaging, signing, validation, and publishing tools, and corresponding tests. The user gave ongoing authorization to release later game-specific fixes after verification. That authorization does not automatically extend to App source or APK publication.
+- Categorized the seven existing packages by game and purpose and added the signed v2 catalog. The original catalog and published ZIPs were retained byte for byte. Updates must increment the version and keep the old package.
+- Limited automatic installation to eligible fix categories, minimum App versions, exact executables, and exact target-file baselines. The App source checks before startup, installs and enables matching fixes, and honors manual choices. The seven existing packages remained manual. No demonstration patches were published.
+- Updated the newer Patch menu paths and SMAPI dependency instructions. This change did not build an APK. Aura 0.1.121 does not read the automatic installation protocol. No additional phone gameplay testing was performed.

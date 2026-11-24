@@ -1,26 +1,26 @@
-# Crysis 2 1.9：可选 DX9 启动配置
+# Crysis 2 1.9: Optional DX9 launch profile
 
-这是用户手动选择的兼容配置，使用游戏自身的 `-dx9` 参数。需要 Aura **0.1.122 / versionCode 123** 或更新版本，0.1.121 不支持此策略。实际 APK 交付情况见 Aura 版本说明。
+This manual compatibility profile uses the game’s built-in `-dx9` argument. It requires Aura **0.1.122 (versionCode 123)** or later. Aura 0.1.121 does not support this policy. See Aura’s release notes for APK availability.
 
-它不修改 EXE、CFG、分辨率、存档或影片设置。DX9 可能改变 DX11 特效的可用性。**尚未确认它能解决 Android 上的启动停滞或画面裁切**；应以实际加载 `CryRenderD3D9.dll` 及游戏画面判断，不能用早期 `d3d9.dll` 探测或启动参数存在代替验证。
+The profile leaves the executable, configuration files, resolution, saves, and video settings intact. DX9 may affect which DX11 effects are available. **Whether this resolves startup stalls or image cropping on Android is still unconfirmed.** Verify that the game actually loads `CryRenderD3D9.dll` and check the result on screen. An early probe for `d3d9.dll` or the presence of the launch argument is insufficient.
 
-## 已核实的版本与原因
+## Verified version and rationale
 
-- 原版 Crysis 2 1.9.0.0，32 位，`Crysis2.exe`，40,670,208 字节。
-- SHA-256：`0079d15b5b85a1ec7e50bb5e59c14eb255ffc247f2ac87e67b65b402bc8a7d91`。
-- 仅通过用户提供的文件进行只读静态分析；完整游戏文件、用户日志不在本仓库。
-- 游戏自身的白名单过滤 `system.cfg`、`user.cfg` 中的 `r_Driver`。之前单行 `r_Driver = "DX9"` 的诊断 CFG 对此版本无效，不应继续移动或重命名该 CFG。
-- 静态调用链：白名单对象 `0x170e5b8`，匹配函数 `0xf385ee`；配置接收器 `0x467c40` 通过后才设置 CVar；原生 DX9 参数分支 `0x480591–0x4805f8` 直接设置 `r_Driver`。地址为该 SHA 对应 PE 虚拟地址。
-- 专用启动分支支持 `-dx9`，与 CFG 过滤不同。这证明参数被游戏支持，不证明游戏最终能够进入主菜单。
+- Original Crysis 2 1.9.0.0, 32-bit, `Crysis2.exe`, 40,670,208 bytes.
+- SHA-256: `0079d15b5b85a1ec7e50bb5e59c14eb255ffc247f2ac87e67b65b402bc8a7d91`.
+- The analysis used only a read-only examination of the user-provided file. This repository does not contain the full game files or user logs.
+- The game’s own allowlist filters `r_Driver` out of `system.cfg` and `user.cfg`. The earlier single-line diagnostic CFG, `r_Driver = "DX9"`, cannot select DX9 in this build. Moving or renaming that file will not help.
+- The static call chain uses allowlist object `0x170e5b8` and match function `0xf385ee`. Configuration handler `0x467c40` sets the CVar only after the allowlist check. The native DX9 argument branch at `0x480591–0x4805f8` sets `r_Driver` directly. These are PE virtual addresses for the SHA-256 above.
+- This confirms that the game accepts `-dx9` independently of CFG filtering. Reaching the main menu still requires a game run.
 
-## 使用与恢复
+## Use and recovery
 
-1. 更新到支持此配置的 Aura，完全结束游戏。
-2. 在该游戏的 **Game Management → Patch → Download patch** 选择此配置，下载并安装。仅手动选择，不参与首次启动自动修复。
-3. 已安装记录位于 Download patch 下方。确认启用，然后正常启动游戏。
-4. 安装、重新启用和每次新启动都会校验已核实的 EXE 基线。安装或重新启用时版本不符会拒绝；安装后游戏更新导致不符时，不再加入 DX9 参数，诊断记录跳过原因。
-5. 关闭后，下次完整启动使用原有参数；卸载保留本机配置记录供离线重装；删除清除 Aura 保存的配置。运行中的游戏不热切换。
+1. Update to a supported version of Aura and fully exit the game.
+2. For this game, open **Game Management → Patch → Download patch**, select this profile, and download and install it. The profile is manually selected and is excluded from first-launch automatic fixes.
+3. Find the installed entry below Download patch. Make sure it is enabled, then launch normally.
+4. Aura verifies the supported executable when installing, re-enabling, and starting a new session. An incompatible version is rejected on install or re-enable. If a game update makes an existing profile incompatible, Aura skips the DX9 argument and records why.
+5. After disabling the profile, fully restart the game to restore the original arguments. Uninstalling retains a local copy for offline reinstallation. Deleting clears Aura’s saved profile. The setting cannot switch during a running session.
 
-原先导入的单行 DX9 诊断 CFG 可在其管理记录中关闭或卸载，按 Aura 既有备份流程恢复；此配置不会自动删除它，更不会覆盖用户其他 CFG。若另行显式设置了 `-dx9`，关闭本配置保留用户自己的参数。
+You can disable or uninstall the earlier single-line diagnostic CFG from its own management entry and restore it through Aura’s existing backup workflow. This profile does not remove that file or overwrite other CFG files. Disabling the profile also preserves any `-dx9` argument you set separately.
 
-`GAME_RENDERER_PROFILE_V1` 区分参数已准备、版本不匹配或文件不可读，实际渲染器始终标为未确认。手机结果需另行采集；宿主安装、恢复、启动参数测试见 [验证记录](validation.json)。配置定义与打包使用仓库 MIT 许可；不包含 Crytek 商业程序或其反汇编。
+`GAME_RENDERER_PROFILE_V1` reports whether the argument was prepared, the executable did not match, or the file could not be read. The actual renderer remains unconfirmed. Host checks for installation, recovery, and launch arguments are in the [validation record](validation.json). The profile and packaging are covered by the repository’s MIT license. Neither Crytek’s proprietary executable nor its disassembly is included.

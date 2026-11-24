@@ -1,33 +1,33 @@
-# Cuphead 宽屏候选与原始下载入口
+# Cuphead widescreen candidate and original downloads
 
-状态：**外部来源索引，未镜像安装包，未加入 Aura 的签名下载目录。** 此页面不表示已在 Aura 或手机上验证宽屏效果。
+**External links only.** The package is not mirrored or listed in Aura’s signed download catalog. Widescreen behavior in Aura and on phones has yet to be tested.
 
 ## Cuphead UltraWide
 
-- 作者：[opaaaaaaaaaaaa 的 Cuphead UltraWide](https://www.nexusmods.com/cuphead/mods/122)。
-- [原始文件页](https://www.nexusmods.com/cuphead/mods/122?tab=files)：模组 1.1.0，2026-07-17，页面标注 4 KB。
-- [作者 GitHub 发布页](https://github.com/gabrielsitta4/game-mods/releases/tag/Cuphead-CupheadUltraWideBepInEx-v1.1.0)也提供同版本 ZIP，并反向链接至 Nexus 122；作者仓库 README 链接同一 Nexus 账号及模组。可从原发布页下载，无需在本仓库镜像。
-- 作者说明：BepInEx／Harmony 相机补丁，自动按显示比例调整，限制在 16:9～2.39:1；扩大可见场景，Overscan 强制为 0。部分脚本场景可能露出背景边缘。
-- 插件目标：`BepInEx/plugins/CupheadUltraWideBepInEx.dll`。1.1.0 是模组版本，不能据此推断匹配的游戏版本。
+- Author: [opaaaaaaaaaaaa’s Cuphead UltraWide](https://www.nexusmods.com/cuphead/mods/122).
+- The [original files page](https://www.nexusmods.com/cuphead/mods/122?tab=files) lists mod version 1.1.0, dated 2026-07-17, at 4 KB.
+- The [author’s GitHub release](https://github.com/gabrielsitta4/game-mods/releases/tag/Cuphead-CupheadUltraWideBepInEx-v1.1.0) provides the same version as a ZIP and links back to Nexus mod 122. The author’s repository README links to the same Nexus account and mod. Download from the original release page.
+- The author describes a BepInEx/Harmony camera patch that automatically adjusts to the display aspect ratio between 16:9 and 2.39:1. It expands the visible scene and forces Overscan to 0. Some scripted scenes may expose the edges of the background.
+- The plugin goes at `BepInEx/plugins/CupheadUltraWideBepInEx.dll`. Version 1.1.0 refers to the mod. Check game version compatibility separately.
 
-依赖页面：[BepInEx for Cuphead](https://www.nexusmods.com/cuphead/mods/173)。作者描述其为官方 BepInEx 5.4.23.5 **x64** 包；实际使用前必须核实 Cuphead.exe 的架构，不能给 x86 游戏套 x64 加载器。
+The author describes [BepInEx for Cuphead](https://www.nexusmods.com/cuphead/mods/173) as the official BepInEx 5.4.23.5 **x64** package. Check the architecture of Cuphead.exe before using it. An x64 loader cannot be used with the x86 game.
 
-作者的 Wine／Proton 指引要求 `winhttp=n,b`；这是需要在 Aura 中单独核实的加载条件，不是已经实现的 Aura 自动启动策略。插件是否加载应检查 `BepInEx/LogOutput.log` 及相机补丁记录。页面没有提供精确游戏构建／托管程序集哈希和完整 DLC 适配表，因此不能把复制文件成功当作宽屏已生效。
+The author’s Wine/Proton instructions require `winhttp=n,b`. This loading requirement has yet to be verified in Aura and is not configured automatically. To verify loading, check `BepInEx/LogOutput.log` and the camera patch logs. The page does not provide exact game builds, managed assembly hashes, or a complete DLC compatibility list, so verify the widescreen effect in-game.
 
-## 当前只提供来源链接
+## Original links and redistribution
 
-2026-10-26 核对作者页，其上传许可写明：
+The author’s upload permissions checked on 2026-10-26 say:
 
 > You are not allowed to upload this file to other sites under any circumstances.
 
-修改许可也要求先取得作者许可。尚未提供可覆盖本仓库发布的授权，因此不镜像 DLL／ZIP，不伪造下载条目，不发布修改后的商业游戏程序集。该限制不代表官方开源 BepInEx 本身的许可；若后续使用加载器，另核对其上游许可证和对应源码义务。
+Modifications also require the author’s prior permission. This repository has no authorization to mirror the DLL or ZIP. It lists the original links and does not redistribute modified proprietary game assemblies. Official BepInEx is licensed separately. Check its upstream license and corresponding source obligations before distributing the loader.
 
-已只读检查作者 GitHub 的 `CupheadUltraWideBepInEx-1.1.0.zip`：4960 字节，SHA-256 `c21604053f8e09017c1526d24186d87fbcf3d47883b48ec0b5aa53cdd08acb8e`，仅有插件 DLL（10240 字节）和父目录，没有附带源码或许可证。此检查不执行 DLL，也不建立再分发授权或手机兼容性证明。
+A read-only inspection of the author’s GitHub asset `CupheadUltraWideBepInEx-1.1.0.zip` found a 4,960-byte ZIP with SHA-256 `c21604053f8e09017c1526d24186d87fbcf3d47883b48ec0b5aa53cdd08acb8e`. It contains only the 10,240-byte plugin DLL and its parent directory. No source or license is bundled. The inspection did not execute the DLL or establish redistribution rights or phone compatibility.
 
-取得可再分发授权与合法安装包后，仍需核对目标游戏基线、加载器架构、已有 DLL 覆盖关系，并完成 Aura 的下载、启用、关闭、卸载和冲突恢复测试，再将真实包加入签名目录。宽屏保持手动选择，不能自动改变游戏文件。
+Before adding a legally redistributable package to the signed catalog, verify the supported game build, loader architecture, existing DLL overrides, and Aura’s download, enable, disable, uninstall, and conflict recovery behavior. Keep installation a manual choice.
 
-## 旧方案
+## Older alternatives
 
-[Mod fix ultra-wide screen](https://www.nexusmods.com/cuphead/mods/90) 直接替换 `Cuphead_Data/Managed/Assembly-CSharp.dll`，作者明确说明只能部分去黑边，Boss 和训练关仍受 16:9 资源限制。旧 [WSGF 修复](https://www.wsgf.org/phpBB3/viewtopic.php?f=64&t=32324) 面向 1.00／1.1.3／1.1.4，不作为当前游戏版本兼容证明。
+[Mod fix ultra-wide screen](https://www.nexusmods.com/cuphead/mods/90) replaces `Cuphead_Data/Managed/Assembly-CSharp.dll`. Its author says it only removes some black borders. Boss fights and tutorial areas still use 16:9 assets. The older [WSGF fix](https://www.wsgf.org/phpBB3/viewtopic.php?f=64&t=32324) targets versions 1.00, 1.1.3, and 1.1.4. Compatibility with current builds remains unverified.
 
-宽屏与原厂驱动的暗画面属于不同问题；这个候选不承诺解决颜色、闪烁或性能问题。
+This candidate addresses aspect ratio. Any effect on the stock driver’s dark image, flicker, or performance remains unverified.

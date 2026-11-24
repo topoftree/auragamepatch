@@ -246,11 +246,13 @@ def write_index(root, entries):
     folder = root / "games"
     folder.mkdir(exist_ok=True)
     (folder / "index.json").write_bytes(encoded(games))
-    rows = ["# 游戏补丁分类", "", "自动安装只适用于签名目录中明确声明 autoInstall 且符合原文件基线的新修复。", "",
-            "| 游戏 | 分类 | 补丁 | 安装策略 |", "| --- | --- | --- | --- |"]
+    rows = ["# Game patch directory", "",
+            "Automatic installation is available for new fixes that declare `autoInstall` in the signed catalog and match the required original files.", "",
+            "| Game | Category | Patch | Installation policy |", "| --- | --- | --- | --- |"]
     for p in sorted(entries, key=lambda p: (p["game"], p["category"], p["id"])):
         rows.append(f'| {p["game"]} | {p["category"]} | [{p["id"]} {p["version"]}](../{p["path"]}) | '
-                    + (f'精确版本自动安装；App code ≥ {p["autoInstall"]["minAppVersionCode"]}' if p.get("autoInstall") else "用户手动选择") + " |")
+                    + (f'Automatic for exact matches (App versionCode {p["autoInstall"]["minAppVersionCode"]} or later)'
+                       if p.get("autoInstall") else "Manual selection") + " |")
     (folder / "README.md").write_text("\n".join(rows) + "\n")
 
 
